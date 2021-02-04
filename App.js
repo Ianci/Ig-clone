@@ -2,13 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image } from 'react-native';
 import Landing from './components/auth/Landing';
 import * as firebase from 'firebase';
 import { Register } from './components/auth/Register';
 import  Login  from './components/auth/Login';
-import { render } from 'react-dom';
-import Logout from './components/auth/Logout';
+import loadingbackground from './images/loadingbackground.svg'
 import Main from './components/main/Main';
 
 //Redux
@@ -60,11 +59,13 @@ export default class App extends Component {
   }
   render() {
     const { loggedIn, loaded } = this.state;
-
+    
     if(!loaded){
       return (
         <View style={styles.container}>
-          <Text>Loading...</Text>
+            <Image source={require('./images/loadingbackground.svg')}/>
+          <Text style={styles.textLoading}>Loading...</Text>
+        
         </View>
       )
     }
@@ -103,5 +104,14 @@ export default class App extends Component {
    
 
 const styles = StyleSheet.create({
-  
+  container: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  textLoading: {
+    fontWeight: 'bold',
+    color: 'orangered',
+    fontSize: 25,
+    textAlign: 'center',
+}
 });

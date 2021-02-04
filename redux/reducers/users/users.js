@@ -1,4 +1,4 @@
-import { USER_STATE_CHANGE } from '../../redux/types';
+import { USER_STATE_CHANGE } from '../../types';
 
 const initialState = {
     currentUser: null
