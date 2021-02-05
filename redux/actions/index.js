@@ -1,8 +1,12 @@
 import firebase from 'firebase'
 import { USER_STATE_CHANGE } from '../types'
-import { endLoading, loadingAction } from './ui'
+import { endLoading, loadingAction, errorHandler } from './ui'
+
+
 
 export const fetchUser = () =>{
+
+    
     return ((dispatch) => {
         dispatch(loadingAction())
         firebase.firestore()
@@ -14,9 +18,12 @@ export const fetchUser = () =>{
                     dispatch({ type: USER_STATE_CHANGE, currentUser: snapshot.data() })
                     dispatch(endLoading())
                 }
-                else {
-                    console.log('User does not exist')
-                }
+               
             })
+            .catch((error) => {
+                console.log(error)
+                
+                // ..
+              });
     })
 }

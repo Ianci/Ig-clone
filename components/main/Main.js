@@ -4,22 +4,26 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import {fetchUser} from '../../redux/actions';
 import { Logout } from '../../components/auth/Logout';
+import { LoadingPage } from '../loading/LoadingPage';
 
 
 
 
 export class Main extends Component {
     
+  
+       
    
     componentDidMount(){
         this.props.fetchUser()
         
     }
     render() {
-        
+
         const { currentUser } = !!this.props && this.props
-        
-        if(currentUser === null) return <View style={styles.container}><Text style={styles.textLoading}>Loading...</Text></View>
+        console.log(currentUser)
+
+        if(currentUser === null ) return(<LoadingPage />)
 
         
             return (

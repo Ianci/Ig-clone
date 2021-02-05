@@ -1,6 +1,7 @@
 
 import React from 'react';
-import { Button } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
+import firebase from 'firebase'
 export const Logout = () => {
 
     const logOutFn = () =>{
@@ -12,8 +13,25 @@ export const Logout = () => {
     }
 
     return (
-        
-             <Button title="Log out" onPress={logOutFn} />
+            <View style={styles.btnContainer}>
+             <Button title="Log out" onPress={logOutFn} style={styles.btn}/>
+            </View>
        
     )
 }
+
+
+const styles = StyleSheet.create({
+  btnContainer  : {
+    width: 150,
+    height: 150,
+    justifyContent: 'center',
+    marginLeft: 110,
+
+  },
+  btn: {
+    width: '50',
+    height: '50',
+    margin: '0 auto'
+  }
+});

@@ -13,7 +13,10 @@ import Main from './components/main/Main';
 //Redux
 import { store } from './redux/store/store'
 import  { Provider } from 'react-redux'
+import { LoadingPage } from './components/loading/LoadingPage';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
 
 
 
@@ -39,7 +42,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       loaded: false,
-      loggedIn: false,
+      
     }
   }
 
@@ -47,7 +50,8 @@ export default class App extends Component {
     firebase.auth().onAuthStateChanged((user) => {
       if(!user){
         this.setState({
-          loggedIn: false, loaded: true
+          loggedIn: false, 
+          loaded: true
         })
       } else {
         this.setState({
@@ -59,19 +63,14 @@ export default class App extends Component {
   }
   render() {
     const { loggedIn, loaded } = this.state;
-    
-    if(!loaded){
-      return (
-        <View style={styles.container}>
-            <Image source={require('./images/loadingbackground.svg')}/>
-          <Text style={styles.textLoading}>Loading...</Text>
-        
-        </View>
-      )
+   
+    if(!loaded ) {
+      return <LoadingPage />
     }
 
     if(!loggedIn){
       return (
+        <Provider store={store}>
         <NavigationContainer>
         <Stack.Navigator initialRouteName="Landing">
 
@@ -86,8 +85,10 @@ export default class App extends Component {
 
           <Stack.Screen name="Login" component={Login} 
           />
+         
         </Stack.Navigator>
       </NavigationContainer>
+      </Provider>
       )
     }
 
@@ -101,17 +102,9 @@ export default class App extends Component {
 
 
     
+
    
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center'
-  },
-  textLoading: {
-    fontWeight: 'bold',
-    color: 'orangered',
-    fontSize: 25,
-    textAlign: 'center',
-}
+ 
 });

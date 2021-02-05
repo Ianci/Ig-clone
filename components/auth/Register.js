@@ -6,6 +6,7 @@ import firebase from 'firebase';
 export class Register extends Component {
     constructor(props) {
         super(props);
+        const navigation = this.props
         this.state = {
             email: '',
             password: '',
@@ -23,6 +24,7 @@ export class Register extends Component {
                 name,
                 email
             })
+            navigation.navigate('Main')
             console.log(result)
         })
         .catch((error) =>{
