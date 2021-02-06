@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet, Button, TextInput } from 'react-native'
+import { Text, View, StyleSheet, Button } from 'react-native'
 import firebase from 'firebase';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input } from 'react-native-elements';
+import FlatButton from '../uiComponents/FlatButton';
+import { errorHandler, errorClean } from '../../redux/actions/ui'
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'
 
 export class Register extends Component {
     constructor(props) {
@@ -25,32 +30,92 @@ export class Register extends Component {
                 email
             })
             navigation.navigate('Main')
+            this.props.errorClean() // <--
             console.log(result)
         })
         .catch((error) =>{
             console.log(error)
+            this.props.errorHandler(error.message) // <--
         })
     }
 
+ 
+    
 
     render(){
+        const { error } = this.props
+
         return (
-            <View>
-                <TextInput placeholder="Name"
+            <View style={styles.container}>
+                <Input placeholder="Name"
                 onChangeText={(name) => this.setState({name})}
+                leftIcon={{ type: 'entypo', name: 'add-user' }}
                 />
-                 <TextInput placeholder="Email"
+                 <Input placeholder="Email"
                  
                 onChangeText={(email) => this.setState({email})}
+                leftIcon={{ type: 'fontisto', name: 'email' }}
                 />
 
-                <TextInput placeholder="Password"
+                <Input placeholder="Password"
                 secureTextEntry={true}
                 onChangeText={(password) => this.setState({password})}
+                leftIcon={{ type: 'material-icons', name: 'security' }}
                 />
 
-                <Button title="Sign Up" onPress={this.onSignUp} />
+                <Input placeholder="Repeat your password"
+                secureTextEntry={true}
+                onChangeText={(password) => this.setState({password})}
+                leftIcon={{ type: 'material-icons', name: 'security' }}
+                />
+
+                <FlatButton title="Sign Up" onPress={this.onSignUp} />
+
+                {error && <Text style={styles.errorStyle}>{error}</Text>}
             </View>
         )
     }
 }
+
+const mapStateToProps = store => ({
+    
+    error: store.ui.error
+})
+
+//Pasando las actions al class
+const mapDispatchToProps = (dispatch) => {
+    return { dispatch, ...bindActionCreators({ errorHandler, errorClean}, dispatch)}
+ 
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        margin: 20,
+    },
+    errorStyle: {
+        textAlign: 'center',
+        color: 'red',
+        fontSize: 20,
+        fontWeight: 'bold',
+        letterSpacing: 0.4
+
+    },
+    textInp: {
+        marginHorizontal: 40,
+        borderBottomColor: 'blue',
+        borderBottomWidth: 2,
+        margin: 30,
+        "&:hover": {
+        backgroundColor: 'black'
+        }
+        
+    },
+   
+})
+

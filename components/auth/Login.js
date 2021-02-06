@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
-import { View , Text , TextInput, Button, StyleSheet } from 'react-native'
+import { View , Text, StyleSheet } from 'react-native'
 import firebase from 'firebase'
+
 import { errorHandler, errorClean } from '../../redux/actions/ui'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import { useDispatch } from 'react-redux'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Input } from 'react-native-elements';
+import FlatButton from '../uiComponents/FlatButton';
 
 export class Login extends Component {
  
@@ -37,23 +40,28 @@ export class Login extends Component {
         return (
             
                 <View style={styles.container}>
-                    
-                     <TextInput placeholder="Email"
-                     style={styles.textInp}
+                   
+                   <Input
+                    placeholder='Email'
+                    autoCompleteType="off"
+                    leftIcon={{ type: 'fontisto', name: 'email' }}
                     onChangeText={(email) => this.setState({email})}
                     />
+                   
     
-                    <TextInput placeholder="Password"
+                    <Input placeholder="Password"
+                    autoCompleteType="off"
                     secureTextEntry={true}
-                    style={styles.textInp}
+                    leftIcon={{ type: 'material-icons', name: 'security' }}
                     onChangeText={(password) => this.setState({password})}
                     />
-    
-                    <Button title="Sign In" onPress={this.onSignIn} 
-                        color="#f194ff"
-                        style={styles.btnxd}
-                     />
+                
 
+                   <FlatButton
+                    onPress={this.onSignIn}
+                    title="Log In"
+                    />
+                  
                     {error && <Text style={styles.errorStyle}>{error}</Text>}
                 </View>
             
@@ -101,8 +109,7 @@ const styles = StyleSheet.create({
         }
         
     },
-    btnxd: {
-        color: 'black'
-       
-    }
+   
 })
+
+

@@ -1,19 +1,18 @@
 import React from 'react'
-import { Text, View, StyleSheet, Button, ImageBackground } from 'react-native'
+import { Text, View, StyleSheet, Button, ImageBackground, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
+import ScreenOne from './HeaderOne'
+
+
 export default function Landing({ navigation }) {
 
     const image = { uri: 'https://i.pinimg.com/originals/44/7b/42/447b4200e0503cf6e9725e0268afad62.png'}
     return ( 
         <>
         <View style={styles.main}>
-
-           
-
-            <Header>
-                
-                <Text style={styles.text}>Bienvenido a IG Clone</Text>
-            </Header>
+                <TouchableOpacity style={styles.touchable}>
+                <ScreenOne />
+                </TouchableOpacity>
             <ImageBackground source={image} style={styles.image}>
             <View style={styles.container}>
                 <View style={{marginTop: "5px", padding: "4px"}}>
@@ -39,15 +38,6 @@ export default function Landing({ navigation }) {
 
 
 
-//Styles
-const Header = styled.View`
-backgroundColor: red,
-width: 100%,
-height: 200,
-justifyContent: center,
-borderRadius: 0 0 50% 50%  
-`
-
 
 const styles = StyleSheet.create({
     main: {
@@ -59,10 +49,8 @@ const styles = StyleSheet.create({
     container: {
         flex: '1',
         
-        height: 600,
+        height: 400,
         marginTop: 300,
-
-        
     },
     containerText: {
        
