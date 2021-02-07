@@ -17,6 +17,7 @@ import { LoadingPage } from './components/loading/LoadingPage';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
+import Add from './components/main/Add';
 
 
 
@@ -118,6 +119,17 @@ export default class App extends Component {
           <Stack.Screen name="Main" component={Main} 
           options={{
             headerShown: false,
+          }}
+          />
+           <Stack.Screen name="Add" component={Add} 
+           options={{
+            headerStyle: {
+              backgroundColor: '#7209B7',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
           }}
           />
         </Stack.Navigator>
