@@ -5,32 +5,29 @@ import { bindActionCreators } from 'redux'
 import {fetchUser} from '../../redux/actions';
 import { Logout } from '../../components/auth/Logout';
 import { LoadingPage } from '../loading/LoadingPage';
+import MaterialCommunityIcons from 'react-native-vector-icons'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Feed from './Feed';
 
-
+const Tab = createBottomTabNavigator();
 
 
 export class Main extends Component {
     
-  
-       
-   
+
     componentDidMount(){
         this.props.fetchUser()
         
     }
     render() {
 
-        const { currentUser } = !!this.props && this.props
-        console.log(currentUser)
-
-        if(currentUser === null ) return(<LoadingPage />)
-
+       
         
             return (
-                <View style={styles.container}>
-                    <Text style={{textAlign: 'center'}}>{currentUser.name} is logged in</Text>
-                    <Logout />
-                </View>
+                <Tab.Navigator>
+                    <Tab.Screen name="Feed" component={Feed} />
+                    
+              </Tab.Navigator>
             )
         
        

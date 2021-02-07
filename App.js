@@ -76,25 +76,52 @@ export default class App extends Component {
 
           <Stack.Screen name="Landing" component={Landing} 
           options={{
-            headerShown: false
+            headerShown: false,
           }}
           />
   
           <Stack.Screen name="Register" component={Register} 
+          options={{
+            headerStyle: {
+              backgroundColor: '#7209B7',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
           />
 
           <Stack.Screen name="Login" component={Login} 
+          options={{
+            headerStyle: {
+              backgroundColor: '#7209B7',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
           />
          
         </Stack.Navigator>
       </NavigationContainer>
       </Provider>
+      
       )
     }
 
     return (
       <Provider store={store}>
-      <Main />
+        <NavigationContainer>
+        <Stack.Navigator initialRouteName="Main">
+          <Stack.Screen name="Main" component={Main} 
+          options={{
+            headerShown: false,
+          }}
+          />
+        </Stack.Navigator>
+       </NavigationContainer>
       </Provider>
     )
   }
