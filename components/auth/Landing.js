@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, View, StyleSheet, Button, ImageBackground, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, ImageBackground,Image, TouchableOpacity } from 'react-native'
+import { Button } from 'react-native-elements'
 import styled from 'styled-components/native'
 import ScreenOne from './HeaderOne'
 
@@ -13,20 +14,29 @@ export default function Landing({ navigation }) {
                 <TouchableOpacity style={styles.touchable}>
                 <ScreenOne />
                 </TouchableOpacity>
-            <ImageBackground source={image} style={styles.image}>
+                <Image
+                style={styles.tinyLogo}
+                source={image}
+                />
+               <View>
+                   
+               </View>
             <View style={styles.container}>
-                <View style={{marginTop: "5px", padding: "4px"}}>
-                <Button title="register"  style={styles.btn}
-                color="#CC2936"
+                <View style={{flex: 1}}>
+                <Button title="Register" buttonStyle={styles.btnRegist}
+                
+                type="solid"
                 onPress={() => navigation.navigate("Register")} />
                 </View>
-                <View style={{marginTop: "4px", padding: "4px"}}>
-                <Button title="Login" style={{padding: "20px"}}
-                color="#DD5560"
+
+                <View style={{flex: 1}}>
+                <Button title="Login" 
+                type="solid"
+                buttonStyle={styles.btnLogin}
                 onPress={() => navigation.navigate("Login")} />
                 </View>
             </View>
-        </ImageBackground>
+        
         <View><Text style={styles.copyright}>Made by Ian © 2021</Text></View>
         </View>
         </>
@@ -46,18 +56,30 @@ const styles = StyleSheet.create({
         height: 600,
         position: 'relative'
     },
+    tinyLogo: {
+        top: 230,
+        left: 60,
+        position: 'absolute',
+        width: '70%',
+        height: 250,
+      },
     container: {
-        flex: '1',
+        flex: 1,
+        marginTop: 400
+    },
+    imgBg: {
+       width: 300,
+       position: 'absolute'
+    },
+    btnLogin: {
         
-        height: 400,
-        marginTop: 300,
+        marginHorizontal: 20,
+        backgroundColor: '#DD5560'
     },
-    containerText: {
-       
-    },
-    btn: {
-      width: '100%',
-      padding: 10,
+    btnRegist: {
+        marginTop: 120,
+        marginHorizontal: 16,
+        backgroundColor: '#CC2936'
     },
     text: {
         letterSpacing: 1.1111,
@@ -68,7 +90,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         textShadowColor: 'black',
         textShadowRadius: 5,
-        textShadowOffset: 1,
+        textShadowOffset: {width: -1, height: 1},
         color: '#F0386B'
     },
     copyright: {
@@ -76,5 +98,8 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         marginTop: 10
     },
+    btnRegister: {
+        marginStart: 20
+    }
   
 })

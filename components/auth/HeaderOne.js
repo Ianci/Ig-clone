@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     textAlign: 'center',
-    marginTop: 35
+    marginTop: 65
   },
   svgCurve: {
     position: 'absolute',

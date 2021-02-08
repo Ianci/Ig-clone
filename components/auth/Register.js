@@ -110,11 +110,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 40,
         borderBottomColor: 'blue',
         borderBottomWidth: 2,
-        margin: 30,
-        "&:hover": {
-        backgroundColor: 'black'
-        }
-        
+        margin: 30,    
     },
    
 })
