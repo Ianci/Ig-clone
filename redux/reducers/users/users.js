@@ -1,7 +1,8 @@
-import { USER_STATE_CHANGE } from '../../types';
+import { USER_POST_CHANGE, USER_STATE_CHANGE } from '../../types';
 
 const initialState = {
-    currentUser: null
+    currentUser: null,
+    posts: []
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -12,6 +13,11 @@ export const userReducer = (state = initialState, action) => {
             ...state,
             currentUser: action.currentUser
         }
+        case USER_POST_CHANGE:
+            return {
+                ...state,
+                posts: payload
+            }
     
         default:
             return state;

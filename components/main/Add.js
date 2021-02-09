@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, SafeAreaView, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements'
 import { Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
@@ -7,7 +7,7 @@ import FlatButton from '../uiComponents/FlatButton';
 import CustomButton from '../uiComponents/CustomButton'
 
 
-export default function App() {
+export default function Add({ navigation }) {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [hasGalleryPermission, setHasGalleryPermision] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
@@ -66,6 +66,11 @@ export default function App() {
   }
 
   return (
+  
+
+
+   
+ 
     <View style={styles.container}>
         <View
         style={styles.camera} >
@@ -100,12 +105,20 @@ export default function App() {
                 {photoUrl && <Image source={{uri: photoUrl }} style={{flex: 1}}/>}
                 <View>
                 <CustomButton title="Choose Image from gallery" onPress={pickImage} style={styles.btnGallery}/>  
-                {photoUrl && <Button title="Delete selected photo" onPress={deletePhoto} buttonStyle={styles.btnDelete}/> } 
+                {photoUrl && 
+                <>
+                <Button title="Delete selected photo" onPress={deletePhoto} buttonStyle={styles.btnDelete}/> 
+                <Button title="Save" onPress={() => navigation.navigate('Save', { photoUrl})} buttonStyle={styles.btnDelete}/>
+                </>
+                } 
+            
                 </View>
                 
                  
         </View>
     </View>
+ 
+  
   );
 }
 
@@ -115,7 +128,7 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     camera: {
-      flex: 1,
+      flex: 1
     },
     showCameraContainer: {
       marginHorizontal: 10,

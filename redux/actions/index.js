@@ -1,12 +1,13 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { USER_STATE_CHANGE } from '../types'
+import { USER_POST_CHANGE, USER_STATE_CHANGE } from '../types'
 import { endLoading, loadingAction, errorHandler } from './ui'
-
+import { useDispatch } from 'react-redux'
 
 
 export const fetchUser = () =>{
 
+    
     
     return ((dispatch) => {
         dispatch(loadingAction())
@@ -26,5 +27,42 @@ export const fetchUser = () =>{
                 
                 // ..
               });
+    })
+}
+
+
+//Fetch posts function
+export const fetchPost = () =>{
+    return ((dispatch) => {
+        dispatch(loadingAction())
+        firebase.firestore()
+            .collection('posts')
+            .doc(firebase.auth().currentUser.uid)
+            .collection('userPost')
+            .orderBy('creation', 'asc')
+            .get()
+            .then((snapshot) => {
+              let posts = snapshot.docs.map(doc => {
+                  const data = doc.data()
+                  const dataId = doc.id
+               
+                  return {dataId, ...data}
+              })
+              dispatch(userPost(posts))
+              console.log(posts)
+               
+            })
+            .catch((error) => {
+                console.log(error)
+                
+              });
+    })
+}
+
+//Fetch posts Action
+const userPost = (posts) => {
+    return ({
+        type: USER_POST_CHANGE,
+        payload: posts
     })
 }

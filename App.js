@@ -18,6 +18,7 @@ import { LoadingPage } from './components/loading/LoadingPage';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import Add from './components/main/Add';
+import Save from './components/main/Save';
 
 
 
@@ -117,11 +118,21 @@ export default class App extends Component {
         <NavigationContainer>
         <Stack.Navigator initialRouteName="Main">
           <Stack.Screen name="Main" component={Main} 
-          options={{
-            headerShown: false,
-          }}
           />
            <Stack.Screen name="Add" component={Add} 
+           navigation={this.props.navigation}
+           options={{
+            headerStyle: {
+              backgroundColor: '#7209B7',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+          />
+           <Stack.Screen name="Save" component={Save} 
+            navigation={this.props.navigation}
            options={{
             headerStyle: {
               backgroundColor: '#7209B7',

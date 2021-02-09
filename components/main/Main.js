@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Button , Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import {fetchUser} from '../../redux/actions';
+import {fetchUser, fetchPost} from '../../redux/actions';
 import { Logout } from '../../components/auth/Logout';
 import { LoadingPage } from '../loading/LoadingPage';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,6 +11,7 @@ import Feed from './Feed';
 
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import Search from './Search';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -23,6 +24,7 @@ export class Main extends Component {
 
     componentDidMount(){
         this.props.fetchUser()
+        this.props.fetchPost()
         
     }
     render() {
@@ -45,6 +47,18 @@ export class Main extends Component {
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
                       <MaterialCommunityIcons name="home" color={color} size={26} />
+                    ),
+                  }}
+                />
+                 
+                 <Tab.Screen
+                  name="Search"
+                  component={Search}
+                  navigation={this.props.navigation}
+                  options={{
+                    tabBarLabel: 'Search',
+                    tabBarIcon: ({ color, size }) => (
+                      <MaterialCommunityIcons name="briefcase-search" color={color} size={26} />
                     ),
                   }}
                 />
@@ -89,7 +103,7 @@ const mapStateToProps = store => ({
 //Pasando las actions al class
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ 
-        fetchUser }, 
+        fetchUser, fetchPost }, 
         dispatch)
   }
 

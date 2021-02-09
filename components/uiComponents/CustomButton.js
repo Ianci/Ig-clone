@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         paddingHorizontal: 6,
         marginHorizontal: 60,
-        marginVertical: 10,
+        marginVertical: 20,
         backgroundColor: '#EE4266'
     },
     btnText: {
