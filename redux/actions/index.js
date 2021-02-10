@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { USER_POST_CHANGE, USER_STATE_CHANGE, USER_FOLLOWS_CHANGE, USER_DATA_STATE_CHANGE, USER_POST_STATE_CHANGE } from '../types'
+import { USER_POST_CHANGE, USER_STATE_CHANGE, USER_FOLLOWS_CHANGE, USER_DATA_STATE_CHANGE, USER_POST_STATE_CHANGE, CLEAR_DATA_LOGOUT } from '../types'
 import { endLoading, loadingAction, errorHandler } from './ui'
 import { useDispatch } from 'react-redux'
 
@@ -86,6 +86,9 @@ export const fetchFollows = () =>{
                   return dataId
                 })
               dispatch(userFollows(following))
+              for(let i = 0; i < following.length ; i++){
+              dispatch(fetchUserData(following[i], true))
+              }
             })
     })
 }
@@ -112,13 +115,12 @@ export const fetchUserData = (uid) => {
                     let user = snapshot.data();
                     user.uid = snapshot.id
                     dispatch(fetchDataAction(user))
+                    dispatch(fetchUserFollowingPost(user.uid))
                 }
             })
         }
     });
 };
-
-//Action
 
 
 //Function
@@ -134,8 +136,31 @@ const fetchUserFollowingPost = uid => {
         .get()
         .then((snapshot) => {
             const uid = snapshot.query.EP.path.segments[1]
-            
+            console.log({ snapshot, uid});
+            const user = getState().userData.users.find(el => el.uid === uid)
+
+            let posts = snapshot.docs.map(doc => {
+                const data = doc.data()
+                const id = doc.id
+                return { id, ...data, user}
+            })
+            console.log(posts)
+            dispatch({type: USER_POST_STATE_CHANGE, posts, uid})
+            console.log(getState())
         })
       
+    })
+}
+
+//Action
+const clearDataAction = () => {
+    return({
+        type: CLEAR_DATA_LOGOUT
+    })
+}
+//Function
+export const clearData = () => {
+    return((dispatch) => {
+        dispatch(clearDataAction())
     })
 }

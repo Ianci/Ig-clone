@@ -19,6 +19,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import Add from './components/main/Add';
 import Save from './components/main/Save';
+import Comments from './components/main/Comments';
 
 
 
@@ -133,6 +134,18 @@ export default class App extends Component {
           />
            <Stack.Screen name="Save" component={Save} 
             navigation={this.props.navigation}
+           options={{
+            headerStyle: {
+              backgroundColor: '#7209B7',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
+          />
+            <Stack.Screen name="Comments" component={Comments} 
+           navigation={this.props.navigation}
            options={{
             headerStyle: {
               backgroundColor: '#7209B7',

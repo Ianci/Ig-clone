@@ -5,14 +5,15 @@ import firebase from 'firebase'
 import 'firebase/firestore'
 import { USER_STATE_CHANGE } from '../../redux/types'
 import { endLoading, loadingAction } from '../../redux/actions/ui'
+import { clearData } from '../../redux/actions/index'
 import { Button } from 'react-native-elements'
-
+import { useDispatch } from 'react-redux'
 
 export function Profile(props) {
     const [ userPosts, setUserPosts ] = useState([])
     const [ user, setUser ] = useState(null)
     const [ isFollowing, setIsFollowing ] = useState(false)
-   
+    const dispatch = useDispatch()
 
     useEffect(() => {
 
@@ -87,6 +88,19 @@ export function Profile(props) {
         .doc(props.route.params.uid)
         .delete()
     }
+
+    //onLog out function
+    const onLogOut = () => {
+        firebase.auth().signOut().then(() => {
+            console.log('Disconnected succesfully')
+           
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
+
     if(user === null) {
         return <View />
     }
@@ -108,12 +122,15 @@ export function Profile(props) {
                             <Button title="Follow" buttonStyle={styles.btnFollow} onPress={() => onFollow()} />
                        )}
                    </View>
-                ): null}
+                ): 
+                <View><Button title="Logout" onPress={() => onLogOut()}/></View>}
                 
+            </View>
+            <View>
+            <Text style={styles.textuserr}>Posts:</Text>
             </View>
             <View style={styles.containerPost}>
                 <FlatList 
-               
                 numColumns={3}
                 horizontal={false}
                 data={userPosts}
@@ -153,7 +170,14 @@ const styles = StyleSheet.create({
     textuser: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: '#FFFFFF'
+        color: '#FFFFFF',
+        textAlign: 'center'
+    },
+    textuserr: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        marginLeft: 10
     },
     textposts: {
         fontSize: 14,
@@ -162,10 +186,12 @@ const styles = StyleSheet.create({
     },
     containerPost: {
         flex: 1,
-
+        marginHorizontal: 10,
+        marginVertical: 10
     },
     containerImage: {
-        flex: 1 /3
+        flex: 1 /3,
+        margin: 2
     },
     image: {
         flex: 1,

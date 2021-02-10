@@ -30,12 +30,12 @@ export class Register extends Component {
                 email
             })
             navigation.navigate('Main')
-            this.props.errorClean() // <--
+            
             console.log(result)
         })
         .catch((error) =>{
             console.log(error)
-            this.props.errorHandler(error.message) // <--
+           
         })
     }
 

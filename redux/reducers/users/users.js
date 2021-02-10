@@ -1,4 +1,4 @@
-import { USER_POST_CHANGE, USER_STATE_CHANGE, USER_FOLLOWS_CHANGE } from '../../types';
+import { USER_POST_CHANGE, USER_STATE_CHANGE, USER_FOLLOWS_CHANGE, CLEAR_DATA_LOGOUT } from '../../types';
 
 const initialState = {
     currentUser: null,
@@ -23,6 +23,12 @@ export const userReducer = (state = initialState, action) => {
             return {
                 ...state,
                 follows: payload
+            }
+        case CLEAR_DATA_LOGOUT:
+            return {
+                currentUser: null,
+                posts: [],
+                follows: []
             }
         default:
             return state;

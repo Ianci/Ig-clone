@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Button , Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import {fetchUser, fetchPost, fetchFollows} from '../../redux/actions';
+import {fetchUser, fetchPost, fetchFollows, clearData } from '../../redux/actions';
 import { Logout } from '../../components/auth/Logout';
 import { LoadingPage } from '../loading/LoadingPage';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -26,6 +26,7 @@ export class Main extends Component {
         this.props.fetchUser()
         this.props.fetchPost()
         this.props.fetchFollows()
+        this.props.clearData()
         
     }
     render() {
@@ -110,7 +111,7 @@ const mapStateToProps = store => ({
 //Pasando las actions al class
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ 
-        fetchUser, fetchPost, fetchFollows }, 
+        fetchUser, fetchPost, fetchFollows, clearData }, 
         dispatch)
   }
 
