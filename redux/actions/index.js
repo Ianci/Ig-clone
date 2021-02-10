@@ -1,14 +1,12 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore';
-import { USER_POST_CHANGE, USER_STATE_CHANGE } from '../types'
+import { USER_POST_CHANGE, USER_STATE_CHANGE, USER_FOLLOWS_CHANGE, USER_DATA_STATE_CHANGE, USER_POST_STATE_CHANGE } from '../types'
 import { endLoading, loadingAction, errorHandler } from './ui'
 import { useDispatch } from 'react-redux'
 
 
 export const fetchUser = () =>{
 
-    
-    
     return ((dispatch) => {
         dispatch(loadingAction())
         firebase.firestore()
@@ -63,5 +61,81 @@ const userPost = (posts) => {
     return ({
         type: USER_POST_CHANGE,
         payload: posts
+    })
+}
+
+const userFollows = ids => {
+    return({
+        type: USER_FOLLOWS_CHANGE,
+        payload: ids
+    })
+}
+
+
+export const fetchFollows = () =>{
+    return ((dispatch) => {
+        dispatch(loadingAction())
+        firebase.firestore()
+            .collection('following')
+            .doc(firebase.auth().currentUser.uid)
+            .collection('userFollowing')
+            
+            .onSnapshot((snapshot) => {
+              let following = snapshot.docs.map(doc => {
+                  const dataId = doc.id
+                  return dataId
+                })
+              dispatch(userFollows(following))
+            })
+    })
+}
+
+//Action
+const fetchDataAction = (user) => {
+    return({
+        type: USER_DATA_STATE_CHANGE,
+        payload: user   
+    })
+}
+//Function
+export const fetchUserData = (uid) => {
+    return((dispatch, getState) => {
+        const foundUser = getState().userData.users.some(el => el.uid === uid)
+
+        if(!foundUser){
+            firebase.firestore()
+            .collection('users')
+            .doc(uid)
+            .get()
+            .then((snapshot) => {
+                if(snapshot.exists){
+                    let user = snapshot.data();
+                    user.uid = snapshot.id
+                    dispatch(fetchDataAction(user))
+                }
+            })
+        }
+    });
+};
+
+//Action
+
+
+//Function
+
+const fetchUserFollowingPost = uid => {
+    return((dispatch, getState) => {
+       
+        firebase.firestore()
+        .collection('posts')
+        .doc(uid)
+        .collection('userPost')
+        .orderBy('creation', 'asc')
+        .get()
+        .then((snapshot) => {
+            const uid = snapshot.query.EP.path.segments[1]
+            
+        })
+      
     })
 }

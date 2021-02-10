@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Button , Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import {fetchUser, fetchPost} from '../../redux/actions';
+import {fetchUser, fetchPost, fetchFollows} from '../../redux/actions';
 import { Logout } from '../../components/auth/Logout';
 import { LoadingPage } from '../loading/LoadingPage';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -22,10 +22,10 @@ const EmptyScreen = () => {
 
 export class Main extends Component {
     
-
     componentDidMount(){
         this.props.fetchUser()
         this.props.fetchPost()
+        this.props.fetchFollows()
         
     }
     render() {
@@ -110,7 +110,7 @@ const mapStateToProps = store => ({
 //Pasando las actions al class
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ 
-        fetchUser, fetchPost }, 
+        fetchUser, fetchPost, fetchFollows }, 
         dispatch)
   }
 
